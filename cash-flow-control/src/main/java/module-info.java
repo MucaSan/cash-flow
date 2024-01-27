@@ -3,7 +3,8 @@ module com.example.cashflowcontrol {
     requires javafx.fxml;
 
     requires com.almasb.fxgl.all;
-
-    opens com.example.cashflowcontrol to javafx.fxml;
-    exports com.example.cashflowcontrol;
+    exports controllers.cashflowcontrol;
+    opens controllers.cashflowcontrol to javafx.fxml;
+    exports application.cashflowcontrol;
+    opens application.cashflowcontrol to javafx.fxml;
 }
