@@ -1,6 +1,7 @@
 module com.example.cashflowcontrol {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
     requires com.almasb.fxgl.all;
     exports controllers.cashflowcontrol;
