@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="616.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.cashflowcontrol.SignInController">
    <children>
@@ -15,25 +15,25 @@
             <Font name="System Bold" size="31.0" />
          </font>
       </Label>
-      <TextField layoutX="231.0" layoutY="232.0" prefHeight="37.0" prefWidth="206.0" />
+      <TextField fx:id="textUsername" layoutX="231.0" layoutY="232.0" prefHeight="37.0" prefWidth="206.0" />
       <Label layoutX="68.0" layoutY="220.0" prefHeight="60.0" prefWidth="137.0" text="Username">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="231.0" layoutY="294.0" prefHeight="37.0" prefWidth="206.0" />
-      <Label layoutX="68.0" layoutY="282.0" prefHeight="60.0" prefWidth="137.0" text="Password">
+      <Label layoutX="68.0" layoutY="282.0" prefHeight="60.0" prefWidth="144.0" text="Password">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="350.0" layoutY="491.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="174.0" text="Create Account" />
-      <TextField layoutX="231.0" layoutY="363.0" prefHeight="26.0" prefWidth="206.0" />
+      <Button fx:id="buttonCreate" layoutX="350.0" layoutY="491.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="174.0" text="Create Account" />
       <Label layoutX="67.0" layoutY="350.0" prefHeight="52.0" prefWidth="137.0" text="Repeat Password" textFill="#bf0808">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <CheckBox layoutX="462.0" layoutY="294.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="125.0" text="View password" />
+      <CheckBox fx:id="checkPassword" layoutX="462.0" layoutY="294.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="125.0" text="View password" />
+      <PasswordField fx:id="textPassword" layoutX="231.0" layoutY="294.0" prefHeight="37.0" prefWidth="206.0" />
+      <PasswordField fx:id="textRPassword" layoutX="231.0" layoutY="361.0" prefHeight="30.0" prefWidth="206.0" />
    </children>
 </AnchorPane>
