@@ -1,5 +1,6 @@
 package controllers.cashflowcontrol;
 import javafx.scene.control.Alert;
+import generalVariables.cashflowcontrol.GlobalVariables;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,17 +37,19 @@ public class LoginController {
         // creating an object DatabaseConnection, instanced on the class DatabaseConnection
         DatabaseConnection connection =  new DatabaseConnection();
         Connection connectToDatabase = connection.getConnection();
-        String SQL = "SELECT * FROM costFlowControlDB.UsersDB where username='" + textUsername.getText() + "' AND password='"+  textPassword.getText()+  "' ;";
+       GlobalVariables.SQL = "SELECT * FROM costFlowControlDB.UsersDB where username='" + textUsername.getText() + "' AND password='"+  textPassword.getText()+  "' ;";
        try{
             Statement statement = connectToDatabase.createStatement();
-           ResultSet  queryResult = statement.executeQuery(SQL);
+           ResultSet  queryResult = statement.executeQuery(GlobalVariables.SQL);
            if(queryResult.next()){
                 labelTest.setText("Logged!");
                 labelTest.setVisible(true);
+
            }else{
                labelTest.setText("ERROR!");
                labelTest.setVisible(true);
            }
+           statement.close();
        }catch(SQLException e){
            e.printStackTrace();
            e.getCause();
@@ -72,7 +75,7 @@ public class LoginController {
         alert.setTitle(title);
         alert.setHeaderText(headerContent);
         alert.setContentText(fixMessage);
-        alert.show();
+        alert.showAndWait();
     }
 
 }

@@ -26,7 +26,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="buttonCreate" layoutX="350.0" layoutY="491.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="174.0" text="Create Account" />
+      <Button fx:id="buttonCreate" layoutX="350.0" layoutY="491.0" mnemonicParsing="false" onMouseClicked="#createAccountClick" prefHeight="52.0" prefWidth="174.0" text="Create Account" />
       <Label layoutX="67.0" layoutY="350.0" prefHeight="52.0" prefWidth="137.0" text="Repeat Password" textFill="#bf0808">
          <font>
             <Font name="System Bold" size="14.0" />
