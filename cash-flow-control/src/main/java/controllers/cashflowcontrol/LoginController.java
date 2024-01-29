@@ -31,8 +31,12 @@ public class LoginController {
        try{
             Statement statement = connectToDatabase.createStatement();
            ResultSet  queryResult = statement.executeQuery(SQL);
-           while(queryResult.next()){
+           if(queryResult.next()){
                 labelTest.setText("Logged!");
+                labelTest.setVisible(true);
+           }else{
+               labelTest.setText("ERROR!");
+               labelTest.setVisible(true);
            }
        }catch(SQLException e){
            e.printStackTrace();
