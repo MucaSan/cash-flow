@@ -24,7 +24,7 @@ public class LoginController {
     @FXML
     private Label labelTest;
 
-    public void loginClick(ActionEvent event){
+    private void loginClick(ActionEvent event){
         DatabaseConnection connection =  new DatabaseConnection();
         Connection connectToDatabase = connection.getConnection();
         String SQL = "SELECT * FROM costFlowControlDB.UsersDB where username='" + textUsername.getText() + "' AND password='"+  textPassword.getText()+  "' ;";
@@ -42,6 +42,10 @@ public class LoginController {
            e.printStackTrace();
            e.getCause();
        }
+    }
+
+    private void signInClick(ActionEvent event){
+
     }
 
 }
