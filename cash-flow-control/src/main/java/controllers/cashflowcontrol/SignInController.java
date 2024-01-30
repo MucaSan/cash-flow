@@ -1,8 +1,5 @@
 package controllers.cashflowcontrol;
-import interfaces.cashflowcontrol.AlertToBlank;
-import interfaces.cashflowcontrol.AlertToDatabase;
-import interfaces.cashflowcontrol.AlertToPassword;
-import interfaces.cashflowcontrol.CleanTextFields;
+import interfaces.cashflowcontrol.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import generalVariables.cashflowcontrol.GlobalVariables;
@@ -15,7 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class SignInController implements AlertToPassword, AlertToBlank, AlertToDatabase, CleanTextFields {
+public class SignInController implements AlertToPassword, AlertToBlank, AlertToDatabase, CleanTextFields, AlertActionSucessful {
         @FXML
         private TextField textUsername;
         @FXML
@@ -49,8 +46,8 @@ public class SignInController implements AlertToPassword, AlertToBlank, AlertToD
                                               GlobalVariables.SQL = "INSERT INTO costFlowControlDB.UsersDB values('"+textUsername.getText()+ "');";
                                               statement.executeUpdate(GlobalVariables.SQL);
                                               cleanTextFields();
+                                              alertSuccess();
                                               statement.close();
-
                                       }catch(SQLException e){
                                               e.printStackTrace();
                                               e.getCause();
@@ -81,6 +78,13 @@ public class SignInController implements AlertToPassword, AlertToBlank, AlertToD
                 alert.setTitle("Passwords");
                 alert.setHeaderText("ERROR!");
                 alert.setContentText("Passwords aren't the same! Please, check them again!");
+                alert.showAndWait();
+        }
+        public void alertSuccess(){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION;
+                alert.setTitle("Account created");
+                alert.setHeaderText("SUCCESS!");
+                alert.setContentText("Account created sucessfully, and added into the database!");
                 alert.showAndWait();
         }
         public void alertRecordAssociated(){
