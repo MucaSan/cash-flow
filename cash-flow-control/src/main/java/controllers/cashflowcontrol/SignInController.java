@@ -81,7 +81,7 @@ public class SignInController implements AlertToPassword, AlertToBlank, AlertToD
                 alert.showAndWait();
         }
         public void alertSuccess(){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION;
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Account created");
                 alert.setHeaderText("SUCCESS!");
                 alert.setContentText("Account created sucessfully, and added into the database!");
