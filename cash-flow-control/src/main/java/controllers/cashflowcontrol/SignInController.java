@@ -1,8 +1,11 @@
 package controllers.cashflowcontrol;
+import generalPurposesClasses.cashflowcontrol.ChangeWindow;
 import interfaces.cashflowcontrol.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import generalVariables.cashflowcontrol.GlobalVariables;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -32,25 +35,37 @@ public class SignInController implements AlertToPassword, AlertToBlank, AlertToD
                         alertPassword();
                }
                else{
-                       DatabaseConnection databaseConnect = new DatabaseConnection();
-                       Connection connectToDatabase = databaseConnect.getConnection();
+                       GlobalVariables.database = new DatabaseConnection();
+                       GlobalVariables.connection = GlobalVariables.database.getConnection();
                        GlobalVariables.SQL = "SELECT * FROM costFlowControlDB.UsersDB where username='" + textUsername.getText() + "';";
                       try{
-                              Statement statement = connectToDatabase.createStatement();
-                              ResultSet resultSet = statement.executeQuery(GlobalVariables.SQL);
-                              if(resultSet.next()){
+                              GlobalVariables.statement = GlobalVariables.connection.createStatement();
+                              GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+                              if(GlobalVariables.resultSet.next()){
                                       alertRecordAssociated();
 
                               } else{
                                       try{
-                                              GlobalVariables.SQL = "INSERT INTO costFlowControlDB.UsersDB values('"+textUsername.getText()+ "');";
-                                              statement.executeUpdate(GlobalVariables.SQL);
+                                              int temp = 1;
+                                              GlobalVariables.SQL = "SELECT * FROM costFlowControlDB.UsersDB;";
+                                              GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+                                              while(GlobalVariables.resultSet.next()){
+                                                      temp+=1;
+                                              }
+                                              GlobalVariables.SQL = "INSERT INTO costFlowControlDB.UsersDB values" +
+                                                      "('"+temp+"','"+textUsername.getText()+"','"+textPassword.getText()+"');";
+                                              GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
                                               cleanTextFields();
                                               alertSuccess();
-                                              statement.close();
+                                              GlobalVariables.statement.close();
+                                              GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.login/login.fxml");
+                                              GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                                      GlobalVariables.window.getPathToFXMLFile());
                                       }catch(SQLException e){
                                               e.printStackTrace();
                                               e.getCause();
+                                      } catch (IOException e) {
+                                          throw new RuntimeException(e);
                                       }
 
                               }

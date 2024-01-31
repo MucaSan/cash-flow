@@ -1,4 +1,5 @@
 package controllers.cashflowcontrol;
+import generalPurposesClasses.cashflowcontrol.ChangeWindow;
 import javafx.scene.control.Alert;
 import generalVariables.cashflowcontrol.GlobalVariables;
 import java.io.IOException;
@@ -19,9 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 public class LoginController {
-    private Scene scene;
-    private Parent root;
-    private Stage  stage;
     @FXML
     private Button buttonLogin;
     @FXML
@@ -35,21 +33,20 @@ public class LoginController {
 
     public void loginClick(ActionEvent event){
         // creating an object DatabaseConnection, instanced on the class DatabaseConnection
-        DatabaseConnection connection =  new DatabaseConnection();
-        Connection connectToDatabase = connection.getConnection();
+        GlobalVariables.database =  new DatabaseConnection();
+        GlobalVariables.connection = GlobalVariables.database.getConnection();
        GlobalVariables.SQL = "SELECT * FROM costFlowControlDB.UsersDB where username='" + textUsername.getText() + "' AND password='"+  textPassword.getText()+  "' ;";
        try{
-            Statement statement = connectToDatabase.createStatement();
-           ResultSet  queryResult = statement.executeQuery(GlobalVariables.SQL);
-           if(queryResult.next()){
+            GlobalVariables.statement = GlobalVariables.connection.createStatement();
+           GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+           if(GlobalVariables.resultSet.next()){
                 labelTest.setText("Logged!");
                 labelTest.setVisible(true);
-
            }else{
                labelTest.setText("ERROR!");
                labelTest.setVisible(true);
            }
-           statement.close();
+           GlobalVariables.statement.close();
        }catch(SQLException e){
            e.printStackTrace();
            e.getCause();
@@ -58,11 +55,8 @@ public class LoginController {
     public void signUpClick(MouseEvent event) throws IOException {
         try{
             // try to load up and instance a new scene, and set it to the stage variable
-            root = FXMLLoader.load(getClass().getResource("/fxml.controllers.login/signin.fxml"));
-            scene =  new Scene(root);
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.login/signin.fxml");
+            GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(), GlobalVariables.window.getPathToFXMLFile());
         } catch(IOException e){
             // popping message to the user in the GUI.
            alertMessage("ERROR","Failure on executing the new stage",

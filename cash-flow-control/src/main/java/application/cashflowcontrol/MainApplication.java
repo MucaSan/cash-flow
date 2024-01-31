@@ -1,5 +1,4 @@
 package application.cashflowcontrol;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
