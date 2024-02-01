@@ -1,5 +1,4 @@
 package generalPurposesClasses.cashflowcontrol;
-import com.almasb.fxgl.entity.action.Action;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import generalVariables.cashflowcontrol.GlobalVariables;
@@ -18,6 +17,18 @@ public class ChangeWindow <Event>{
         this.pathToFXMLFile = pathToFXMLFile;
     }
     public void setNewWindowFromMouseClick(MouseEvent event , String pathToFXMLFile) throws IOException {
+        try {
+            GlobalVariables.root = FXMLLoader.load(getClass().getResource(pathToFXMLFile));
+            GlobalVariables.scene = new Scene(GlobalVariables.root);
+            GlobalVariables.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            GlobalVariables.stage.setScene(GlobalVariables.scene);
+            GlobalVariables.stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    public void setNewWindowFromAction(ActionEvent event , String pathToFXMLFile) throws IOException {
         try {
             GlobalVariables.root = FXMLLoader.load(getClass().getResource(pathToFXMLFile));
             GlobalVariables.scene = new Scene(GlobalVariables.root);

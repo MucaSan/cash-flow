@@ -31,7 +31,7 @@ public class LoginController {
     @FXML
     private Label labelTest;
 
-    public void loginClick(ActionEvent event){
+    public void loginClick(ActionEvent event) throws IOException{
         // creating an object DatabaseConnection, instanced on the class DatabaseConnection
         GlobalVariables.database =  new DatabaseConnection();
         GlobalVariables.connection = GlobalVariables.database.getConnection();
@@ -42,6 +42,9 @@ public class LoginController {
            if(GlobalVariables.resultSet.next()){
                 labelTest.setText("Logged!");
                 labelTest.setVisible(true);
+               GlobalVariables.window = new ChangeWindow<ActionEvent>(event,"/fxml.controllers.menu/menu.fxml");
+               GlobalVariables.window.setNewWindowFromAction(GlobalVariables.window.getActionEvent(),
+                       GlobalVariables.window.getPathToFXMLFile());
            }else{
                labelTest.setText("ERROR!");
                labelTest.setVisible(true);

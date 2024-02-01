@@ -17,6 +17,8 @@ import javafx.scene.input.MouseEvent;
 
 public class SignInController implements AlertToPassword, AlertToBlank, AlertToDatabase, CleanTextFields, AlertActionSucessful {
         @FXML
+        private Button buttonLoginPage;
+        @FXML
         private TextField textUsername;
         @FXML
         private PasswordField textPassword;
@@ -76,6 +78,11 @@ public class SignInController implements AlertToPassword, AlertToBlank, AlertToD
                       }
                }
 
+        }
+        public void loginPageClick(MouseEvent event) throws IOException{
+                GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.login/login.fxml");
+                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                        GlobalVariables.window.getPathToFXMLFile());
         }
         private boolean verifyPassword(){
                 return textRPassword.getText().equals(textPassword.getText());
