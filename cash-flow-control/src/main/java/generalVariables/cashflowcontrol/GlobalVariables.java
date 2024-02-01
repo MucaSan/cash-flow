@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class GlobalVariables {
     public static String SQL;
+    public static String userLogged;
     public static Scene scene;
     public static Parent root;
     public static Stage stage;

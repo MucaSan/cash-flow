@@ -40,6 +40,7 @@ public class LoginController {
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
            GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
            if(GlobalVariables.resultSet.next()){
+               GlobalVariables.userLogged = textUsername.getText();
                 labelTest.setText("Logged!");
                 labelTest.setVisible(true);
                GlobalVariables.window = new ChangeWindow<ActionEvent>(event,"/fxml.controllers.menu/menu.fxml");
