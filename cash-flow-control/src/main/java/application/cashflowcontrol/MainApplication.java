@@ -1,7 +1,11 @@
 package application.cashflowcontrol;
+import controllers.cashflowcontrol.MenuController;
+import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 
 import java.io.IOException;

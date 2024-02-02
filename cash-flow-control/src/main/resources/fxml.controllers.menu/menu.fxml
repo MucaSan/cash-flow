@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="616.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.cashflowcontrol.MenuController">
    <children>
       <Label layoutX="405.0" layoutY="14.0" prefHeight="62.0" prefWidth="90.0" text="Menu" wrapText="true">
@@ -17,9 +16,9 @@
       <Button fx:id="buttonPayment" layoutX="368.0" layoutY="295.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="138.0" text="Payment" />
       <Button fx:id="buttonManage" layoutX="607.0" layoutY="295.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="138.0" text="Manage" />
       <Button fx:id="buttonLogOut" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#buttonLogOutClick" prefHeight="79.0" prefWidth="138.0" text="Log Out" />
-      <Label fx:id="labelWelcome" layoutX="36.0" layoutY="27.0" prefHeight="135.0" prefWidth="191.0" text="Welcome" textAlignment="JUSTIFY" visible="false">
+      <Label fx:id="labelWelcome" layoutX="36.0" layoutY="27.0" prefHeight="135.0" prefWidth="191.0" text="Welcome" textAlignment="JUSTIFY" textFill="#471dab" visible="false">
          <font>
-            <Font name="AR PL KaitiM Big5" size="30.0" />
+            <Font name="AR PL KaitiM Big5" size="18.0" />
          </font>
       </Label>
    </children>

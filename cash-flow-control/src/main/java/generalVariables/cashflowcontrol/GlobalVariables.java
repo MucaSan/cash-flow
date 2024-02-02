@@ -19,4 +19,9 @@ public class GlobalVariables {
     public static Statement statement;
     public static ResultSet resultSet;
     public static ChangeWindow window;
+    public String getSQL(){
+        return SQL;
+    }
+
+
 }
