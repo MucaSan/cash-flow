@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.controllers.session.Session"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="616.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.controllers.session.Session">
+   <children>
+      <Label layoutX="369.0" prefHeight="95.0" prefWidth="135.0" text="Session" textAlignment="CENTER">
+         <font>
+            <Font name="Roboto Medium" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textName" layoutX="142.0" layoutY="175.0" prefHeight="35.0" prefWidth="185.0" />
+      <TextArea fx:id="textDescription" layoutX="142.0" layoutY="257.0" prefHeight="200.0" prefWidth="490.0" />
+      <Label layoutX="142.0" layoutY="131.0" prefHeight="35.0" prefWidth="97.0" text="Name" textAlignment="CENTER">
+         <font>
+            <Font name="Roboto Medium" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="142.0" layoutY="216.0" prefHeight="35.0" prefWidth="106.0" text="Description" textAlignment="CENTER">
+         <font>
+            <Font name="Roboto Medium" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonCreate" layoutX="142.0" layoutY="497.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="127.0" text="Create" />
+      <Button fx:id="buttonGoBack" layoutX="299.0" layoutY="497.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="127.0" text="Go Back" />
+   </children>
 </AnchorPane>

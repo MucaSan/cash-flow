@@ -24,7 +24,6 @@ public class MenuController implements Initializable {
     @FXML
     private Button buttonManage;
 
-
     public void buttonLogOutClick(MouseEvent event) throws IOException {
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.login/login.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),

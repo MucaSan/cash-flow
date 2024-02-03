@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ChangeWindow <Event>{
     private Event action;
     private String pathToFXMLFile;
-    public ChangeWindow(Event action, String pathToFXMLFile ){
+    public ChangeWindow(Event action, String pathToFXMLFile){
         this.action = action;
         this.pathToFXMLFile = pathToFXMLFile;
     }
