@@ -30,11 +30,11 @@ public class MenuController implements Initializable {
                 GlobalVariables.window.getPathToFXMLFile());
     }
 
-    public void setNameWhenStageIsLoaded(ActionEvent event){
-        event = new ActionEvent();
+    public void buttonSessionClick(MouseEvent event) throws IOException{
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/session.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelWelcome.setText("Welcome "+ GlobalVariables.userLogged + "!");
