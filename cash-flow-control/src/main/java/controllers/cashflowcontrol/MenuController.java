@@ -23,7 +23,6 @@ public class MenuController implements Initializable {
     private Button buttonPayment;
     @FXML
     private Button buttonManage;
-
     public void buttonLogOutClick(MouseEvent event) throws IOException {
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.login/login.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
@@ -32,6 +31,12 @@ public class MenuController implements Initializable {
 
     public void buttonSessionClick(MouseEvent event) throws IOException{
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/session.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
+    }
+
+    public void buttonPaymentClick(MouseEvent event) throws IOException{
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.payment/payment.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
     }
