@@ -40,6 +40,13 @@ public class MenuController implements Initializable {
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
     }
+
+    public void buttonManageClick(MouseEvent event) throws IOException{
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.manage/manage.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelWelcome.setText("Welcome "+ GlobalVariables.userLogged + "!");

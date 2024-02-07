@@ -9,7 +9,7 @@ public class DatabaseConnection {
     public Connection getConnection(){
         String databaseName = "costFlowControlDB";
         String databaseUser = "root";
-        String databasePassword = "pipoca123";
+        String databasePassword = "sAmUEL123!";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
