@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -18,7 +19,7 @@ import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.scene.input.MouseEvent;
 import alerts.classes.cashflowcontrol.AlertManage;
 
-public class ManageController implements Initializable {
+public class ManageController extends AlertManage implements Initializable {
     @FXML
     private TextField   textName;
     @FXML
@@ -34,17 +35,54 @@ public class ManageController implements Initializable {
     private Button  buttonCreate;
     @FXML
     private Button buttonGoBack;
-
     public void buttonCreateClick(MouseEvent event){
+        boolean expressionToEvaluate = (textName.getText().isBlank() || textSource.getText().isBlank()
+        || textAmount.getText().isBlank() || comboSession.getValue().isBlank() ||
+                comboPayment.getValue().isBlank());
+        if (expressionToEvaluate){
+            alertBlank();
+            return;
+        }
         GlobalVariables.database = new DatabaseConnection();
         GlobalVariables.connection = GlobalVariables.database.getConnection();
-//        GlobalVariables.SQL = "SELECT * FROM TransactionDB where '" + textName.getText() +  "'";
+        GlobalVariables.SQL = "SELECT * FROM TransactionDB where '" + textName.getText() +  "';";
         try{
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(
                     GlobalVariables.SQL);
             if (GlobalVariables.resultSet.next()){
                 alertRecordAssociated();
+            }
+            else{
+                int temp = 1;
+                int idSession = 0;
+                int idPayment = 0;
+                GlobalVariables.SQL = "SELECT * FROM TransactionDB;";
+                GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(
+                        GlobalVariables.SQL);
+                while (GlobalVariables.resultSet.next()){
+                    temp+=1;
+                }
+                GlobalVariables.SQL = "SELECT id FROM SessionDB where name = " +
+                        "'"  +  comboSession.getValue()  + "';";
+                GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(
+                        GlobalVariables.SQL);
+                if (GlobalVariables.resultSet.next()){
+                    idPayment = GlobalVariables.resultSet.getInt(1);
+                }
+                GlobalVariables.SQL = "SELECT id FROM PaymentDB where name = " +
+                        "'"  +  comboPayment.getValue()  + "';";
+                GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(
+                        GlobalVariables.SQL);
+                if (GlobalVariables.resultSet.next()){
+                    idPayment = GlobalVariables.resultSet.getInt(1);
+                }
+                GlobalVariables.SQL = "INSERT INTO TransactionDB values('" + temp + "', " +
+                        "'" + idSession  +  "', '" + idPayment +  "' , '" + textName.getText() + "'" +
+                        ",'" + textSource.getText()  +  "', '" + textAmount.getText() + "', " +
+                        "'"  + GlobalVariables.userLogged + "')";
+                alertSuccess();
+                cleanTextFields();
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -81,4 +119,12 @@ public class ManageController implements Initializable {
         comboPayment.setPromptText("Select a type of payment");
         comboSession.setPromptText("Select a session to partion");
     }
+    public void cleanTextFields() {
+        textName.setText("");
+        textSource.setText("");
+        textAmount.setText("");
+        comboSession.setValue("");
+        comboPayment.setValue("");
+    }
+
 }
