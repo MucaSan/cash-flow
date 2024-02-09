@@ -58,5 +58,4 @@ public class ChangeWindow <Event>{
     public String getPathToFXMLFile(){
         return this.pathToFXMLFile;
     }
-
 }

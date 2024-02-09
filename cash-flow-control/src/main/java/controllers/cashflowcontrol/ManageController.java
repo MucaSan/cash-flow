@@ -1,4 +1,6 @@
 package controllers.cashflowcontrol;
+import generalPurposesClasses.cashflowcontrol.ChangeWindow;
+import interfaces.cashflowcontrol.CleanTextFields;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -19,7 +21,7 @@ import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.scene.input.MouseEvent;
 import alerts.classes.cashflowcontrol.AlertManage;
 
-public class ManageController extends AlertManage implements Initializable {
+public class ManageController extends AlertManage implements Initializable, CleanTextFields {
     @FXML
     private TextField   textName;
     @FXML
@@ -32,6 +34,7 @@ public class ManageController extends AlertManage implements Initializable {
     private List<String> listString;
     @FXML
     private ComboBox<String> comboPayment;
+    @FXML
     private Button  buttonCreate;
     @FXML
     private Button buttonGoBack;
@@ -68,7 +71,7 @@ public class ManageController extends AlertManage implements Initializable {
                 GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(
                         GlobalVariables.SQL);
                 if (GlobalVariables.resultSet.next()){
-                    idPayment = GlobalVariables.resultSet.getInt(1);
+                    idSession = GlobalVariables.resultSet.getInt(1);
                 }
                 GlobalVariables.SQL = "SELECT id FROM PaymentDB where name = " +
                         "'"  +  comboPayment.getValue()  + "';";
@@ -81,6 +84,7 @@ public class ManageController extends AlertManage implements Initializable {
                         "'" + idSession  +  "', '" + idPayment +  "' , '" + textName.getText() + "'" +
                         ",'" + textSource.getText()  +  "', '" + textAmount.getText() + "', " +
                         "'"  + GlobalVariables.userLogged + "')";
+                GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
                 alertSuccess();
                 cleanTextFields();
             }
@@ -125,6 +129,11 @@ public class ManageController extends AlertManage implements Initializable {
         textAmount.setText("");
         comboSession.setValue("");
         comboPayment.setValue("");
+    }
+    public void clickButtonGoBack(MouseEvent event) throws IOException{
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
     }
 
 }
