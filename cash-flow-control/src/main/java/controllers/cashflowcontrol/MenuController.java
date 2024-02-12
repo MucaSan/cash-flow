@@ -30,7 +30,7 @@ public class MenuController implements Initializable {
     }
 
     public void buttonSessionClick(MouseEvent event) throws IOException{
-        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/session.fxml");
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/sessionMenu.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
     }

@@ -8,4 +8,6 @@ module com.example.cashflowcontrol {
     opens controllers.cashflowcontrol to javafx.fxml;
     exports application.cashflowcontrol;
     opens application.cashflowcontrol to javafx.fxml;
+    exports generalPurposesClasses.cashflowcontrol;
+    opens generalPurposesClasses.cashflowcontrol to javafx.fxml;
 }

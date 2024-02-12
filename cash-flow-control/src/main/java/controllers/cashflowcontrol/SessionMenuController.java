@@ -8,14 +8,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 public class SessionMenuController implements Initializable {
+    @FXML
+    private AnchorPane root;
     @FXML
     private ImageView imgEdit;
     @FXML
@@ -38,9 +42,12 @@ public class SessionMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Session> listData = FXCollections.observableArrayList();
-        List<ImageView> test = new ArrayList<>();
-        test.add(imgDelete);
-        test.add(imgEdit);
+        ImageView test = new ImageView(imgEdit.getImage());
+        System.out.println(test.getImage().getUrl());
         listData.add(new Session(1, "test", test));
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
+        tableSession.setItems(listData);
     }
 }
