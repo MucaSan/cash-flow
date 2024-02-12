@@ -21,6 +21,7 @@ public class GlobalVariables {
     public static ResultSet resultSet;
     public static ResultSetMetaData metaData;
     public static ChangeWindow window;
+    public static int nIterations;
     public String getSQL(){
         return SQL;
     }

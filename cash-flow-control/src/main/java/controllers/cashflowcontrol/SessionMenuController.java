@@ -1,6 +1,8 @@
 package controllers.cashflowcontrol;
 import com.almasb.fxgl.entity.action.Action;
+import connection.cashflowcontrol.DatabaseConnection;
 import generalPurposesClasses.cashflowcontrol.Session;
+import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,23 +52,43 @@ public class SessionMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Session> listData = FXCollections.observableArrayList();
-        for (int i = 0; i <= 2; i++){
-            final int j = i;
-            ImageView test = new ImageView(){
-                {
-                    setId(String.format("%d", j));
-                }
-                {
-                    setImage(imgEdit.getImage());
-                }
-            };
-            ImageView test2 = new ImageView(imgDelete.getImage());
-            test.setFitHeight(25);
-            test.setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems().get(Integer.parseInt(test.getId())).getId()));
-            test.setFitWidth(25);
-            test2.setFitHeight(25);
-            test2.setFitWidth(25);
-            listData.add(new Session(i, "test",new HBox(test,test2)));
+        try {
+            GlobalVariables.SQL = "SELECT * FROM SessionDB where name= '" + GlobalVariables.userLogged + "';";
+            GlobalVariables.connection = GlobalVariables.database.getConnection();
+            GlobalVariables.statement = GlobalVariables.connection.createStatement();
+            GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+            GlobalVariables.nIterations = 0;
+            while (GlobalVariables.resultSet.next()) {
+                ImageView tempEdit = new ImageView() {
+                    {
+                        setId(String.format("edit%d", GlobalVariables.nIterations));
+                        setImage(imgEdit.getImage());
+                        setFitWidth(25);
+                        setFitHeight(25);
+                        setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
+                                .get(GlobalVariables.nIterations).getId()));
+                    }
+
+                };
+                ImageView tempDelete = new ImageView() {
+                    {
+                        setId(String.format("delete%d", GlobalVariables.nIterations));
+                        setImage(imgDelete.getImage());
+                        setFitWidth(25);
+                        setFitHeight(25);
+                        setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
+                                .get(GlobalVariables.nIterations).getId()));
+                    }
+                };
+
+                listData.add(new Session(GlobalVariables.nIterations, GlobalVariables.resultSet
+                        .getNString(2),
+                        new HBox(tempEdit, tempDelete)));
+                GlobalVariables.nIterations+=1;
+            }
+        } catch (SQLException e) {
+            e.getCause();
+            e.printStackTrace();
         }
 
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -73,4 +96,5 @@ public class SessionMenuController implements Initializable {
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
         tableSession.setItems(listData);
     }
+
 }
