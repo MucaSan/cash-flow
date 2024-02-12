@@ -2,6 +2,7 @@ package generalPurposesClasses.cashflowcontrol;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
 public class Session {
     private Integer id;
     private String name;
-    public ImageView actions;
-    public Session(int id , String name, ImageView actions){
+    HBox actions;
+    public Session(int id , String name, HBox actions){
        this.id = id;
        this.name = name;
        this.actions = actions;
@@ -27,10 +28,10 @@ public class Session {
     public void setId(int id){
         this.id = id;
     }
-    public void setActions(ImageView imageView){
-        this.actions = imageView;
+    public void setActions(HBox actions){
+        this.actions = actions;
     }
-    public ImageView getActions(){
+    public HBox getActions(){
         return this.actions;
     }
 }

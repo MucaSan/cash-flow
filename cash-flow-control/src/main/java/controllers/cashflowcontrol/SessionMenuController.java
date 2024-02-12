@@ -12,9 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 public class SessionMenuController implements Initializable {
@@ -43,8 +45,12 @@ public class SessionMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Session> listData = FXCollections.observableArrayList();
         ImageView test = new ImageView(imgEdit.getImage());
-        System.out.println(test.getImage().getUrl());
-        listData.add(new Session(1, "test", test));
+        ImageView test2 = new ImageView(imgDelete.getImage());
+        test.setFitHeight(25);
+        test.setFitWidth(25);
+        test2.setFitHeight(25);
+        test2.setFitWidth(25);
+        listData.add(new Session(1, "test",new HBox(test,test2)));
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
