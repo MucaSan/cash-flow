@@ -53,7 +53,7 @@ public class SessionMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Session> listData = FXCollections.observableArrayList();
         try {
-            GlobalVariables.SQL = "SELECT * FROM SessionDB where name= '" + GlobalVariables.userLogged + "';";
+            GlobalVariables.SQL = "SELECT * FROM SessionDB where userAssociated= '" + GlobalVariables.userLogged + "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
@@ -65,8 +65,9 @@ public class SessionMenuController implements Initializable {
                         setImage(imgEdit.getImage());
                         setFitWidth(25);
                         setFitHeight(25);
+                        final int j = GlobalVariables.nIterations;
                         setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
-                                .get(GlobalVariables.nIterations).getId()));
+                                .get(j).getId()));
                     }
 
                 };
@@ -76,15 +77,15 @@ public class SessionMenuController implements Initializable {
                         setImage(imgDelete.getImage());
                         setFitWidth(25);
                         setFitHeight(25);
+                        final int j = GlobalVariables.nIterations;
                         setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
-                                .get(GlobalVariables.nIterations).getId()));
+                                .get(j).getId()));
                     }
                 };
-
+                GlobalVariables.nIterations+=1;
                 listData.add(new Session(GlobalVariables.nIterations, GlobalVariables.resultSet
                         .getNString(2),
                         new HBox(tempEdit, tempDelete)));
-                GlobalVariables.nIterations+=1;
             }
         } catch (SQLException e) {
             e.getCause();
