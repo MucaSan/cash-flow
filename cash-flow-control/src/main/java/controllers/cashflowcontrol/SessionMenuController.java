@@ -1,14 +1,17 @@
 package controllers.cashflowcontrol;
 import com.almasb.fxgl.entity.action.Action;
 import connection.cashflowcontrol.DatabaseConnection;
+import generalPurposesClasses.cashflowcontrol.ChangeWindow;
 import generalPurposesClasses.cashflowcontrol.Session;
 import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -20,7 +23,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,6 +64,8 @@ public class SessionMenuController implements Initializable {
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
             GlobalVariables.nIterations = 0;
             while (GlobalVariables.resultSet.next()) {
+                String name = GlobalVariables.resultSet.getNString(2);
+                String description = GlobalVariables.resultSet.getNString(4);
                 ImageView tempEdit = new ImageView() {
                     {
                         setId(String.format("edit%d", GlobalVariables.nIterations));
@@ -66,8 +73,27 @@ public class SessionMenuController implements Initializable {
                         setFitWidth(25);
                         setFitHeight(25);
                         final int j = GlobalVariables.nIterations;
-                        setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
-                                .get(j).getId()));
+                        setOnMouseClicked(mouseEvent -> {
+                            try{
+
+                                FXMLLoader loader = new FXMLLoader(getClass()
+                                        .getResource("/fxml.controllers.session/session.fxml"));
+                                root = loader.load();
+                                SessionController sessionController = loader.getController();
+                                sessionController.displayName(name);
+                                sessionController.displayDescription(description);
+                                Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                               Scene scene = new Scene(root);
+                               stage.setScene(scene);
+                                sessionController.buttonSave.setVisible(true);
+                                sessionController.buttonCreate.setVisible(false);
+                                sessionController.buttonSave.setDisable(false);
+                                sessionController.buttonCreate.setDisable(true);
+                            } catch (IOException e){
+                                e.getCause();
+                                e.printStackTrace();
+                            }
+                        });
                     }
 
                 };
@@ -80,6 +106,7 @@ public class SessionMenuController implements Initializable {
                         final int j = GlobalVariables.nIterations;
                         setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
                                 .get(j).getId()));
+
                     }
                 };
                 GlobalVariables.nIterations+=1;
@@ -91,7 +118,6 @@ public class SessionMenuController implements Initializable {
             e.getCause();
             e.printStackTrace();
         }
-
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));

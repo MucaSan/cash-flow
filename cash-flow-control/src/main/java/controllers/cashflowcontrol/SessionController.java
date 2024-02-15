@@ -18,6 +18,8 @@ public class SessionController extends AlertSession{
         @FXML
         Button buttonCreate;
         @FXML
+        Button buttonSave;
+        @FXML
         Button buttonGoBack;
         @FXML
         TextField textName;
@@ -76,5 +78,16 @@ public class SessionController extends AlertSession{
                 GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
                 GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                         GlobalVariables.window.getPathToFXMLFile());
+                buttonSave.setVisible(false);
+                buttonCreate.setVisible(true);
+                buttonSave.setDisable(true);
+                buttonCreate.setDisable(false);
+        }
+
+        public void displayName (String name){
+                textName.setText(name);
+        }
+        public void displayDescription(String description){
+                textDescription.setText(description);
         }
 }
