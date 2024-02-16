@@ -75,7 +75,6 @@ public class SessionMenuController implements Initializable {
                         final int j = GlobalVariables.nIterations;
                         setOnMouseClicked(mouseEvent -> {
                             try{
-
                                 FXMLLoader loader = new FXMLLoader(getClass()
                                         .getResource("/fxml.controllers.session/session.fxml"));
                                 root = loader.load();
@@ -89,6 +88,7 @@ public class SessionMenuController implements Initializable {
                                 sessionController.buttonCreate.setVisible(false);
                                 sessionController.buttonSave.setDisable(false);
                                 sessionController.buttonCreate.setDisable(true);
+                                sessionController.nameAssociated = name;
                             } catch (IOException e){
                                 e.getCause();
                                 e.printStackTrace();

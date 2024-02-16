@@ -14,7 +14,8 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class SessionController extends AlertSession{
+public class SessionController extends AlertSession implements CleanTextFields{
+        String nameAssociated = null;
         @FXML
         Button buttonCreate;
         @FXML
@@ -90,4 +91,34 @@ public class SessionController extends AlertSession{
         public void displayDescription(String description){
                 textDescription.setText(description);
         }
+        public void saveButtonClick(MouseEvent event) throws IOException{
+                try{
+                        GlobalVariables.SQL =
+                                "SELECT * FROM SessionDB WHERE name = '" + textName.getText() +  "';";
+                        GlobalVariables.connection = GlobalVariables.database.getConnection();
+                        GlobalVariables.statement = GlobalVariables.connection.createStatement();
+                        GlobalVariables.resultSet = GlobalVariables.statement
+                                .executeQuery(GlobalVariables.SQL);
+                        if (GlobalVariables.resultSet.next() && !(textName.getText().equals(nameAssociated))){
+                                alertRecordAssociated();
+                        } else{
+                                GlobalVariables.SQL =
+                                        "UPDATE SessionDB SET name = '" + textName.getText() +  "'" +
+                                                ", description = '" + textDescription.getText() +  "'" +
+                                                " WHERE name = '" + nameAssociated + "';";
+                                GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
+                                alertSuccess();
+                                GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/sessionMenu.fxml");
+                                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                        GlobalVariables.window.getPathToFXMLFile());
+
+                        }
+                } catch(SQLException e){
+                        e.printStackTrace();
+                        e.getCause();
+                }
+
+        }
+
+
 }
