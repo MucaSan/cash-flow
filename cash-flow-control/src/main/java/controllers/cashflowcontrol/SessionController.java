@@ -94,7 +94,8 @@ public class SessionController extends AlertSession implements CleanTextFields{
         public void saveButtonClick(MouseEvent event) throws IOException{
                 try{
                         GlobalVariables.SQL =
-                                "SELECT * FROM SessionDB WHERE name = '" + textName.getText() +  "';";
+                                "SELECT * FROM SessionDB WHERE name = '" + textName.getText() +  "' AND " +
+                                        "userAssociated = '" + GlobalVariables.userLogged  + "' ;";
                         GlobalVariables.connection = GlobalVariables.database.getConnection();
                         GlobalVariables.statement = GlobalVariables.connection.createStatement();
                         GlobalVariables.resultSet = GlobalVariables.statement
@@ -105,13 +106,13 @@ public class SessionController extends AlertSession implements CleanTextFields{
                                 GlobalVariables.SQL =
                                         "UPDATE SessionDB SET name = '" + textName.getText() +  "'" +
                                                 ", description = '" + textDescription.getText() +  "'" +
-                                                " WHERE name = '" + nameAssociated + "';";
+                                                " WHERE name = '" + nameAssociated + "' AND userAssociated = '"
+                                 + GlobalVariables.userLogged + "';";
                                 GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
                                 alertSuccess();
                                 GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/sessionMenu.fxml");
                                 GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                                         GlobalVariables.window.getPathToFXMLFile());
-
                         }
                 } catch(SQLException e){
                         e.printStackTrace();

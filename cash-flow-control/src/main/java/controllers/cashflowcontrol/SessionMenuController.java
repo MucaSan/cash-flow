@@ -1,4 +1,5 @@
 package controllers.cashflowcontrol;
+import alerts.classes.cashflowcontrol.AlertSession;
 import com.almasb.fxgl.entity.action.Action;
 import connection.cashflowcontrol.DatabaseConnection;
 import generalPurposesClasses.cashflowcontrol.ChangeWindow;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-public class SessionMenuController implements Initializable {
+public class SessionMenuController extends AlertSession implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
@@ -104,8 +105,18 @@ public class SessionMenuController implements Initializable {
                         setFitWidth(25);
                         setFitHeight(25);
                         final int j = GlobalVariables.nIterations;
-                        setOnMouseClicked(mouseEvent -> System.out.println(tableSession.getItems()
-                                .get(j).getId()));
+                        setOnMouseClicked(mouseEvent ->{
+                            try{
+                                alertMessage(name);
+                                GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.session/sessionMenu.fxml");
+                                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                        GlobalVariables.window.getPathToFXMLFile());
+                            } catch(IOException e){
+                                e.printStackTrace();
+                                e.getCause();
+                            }
+
+                        });
 
                     }
                 };
@@ -123,5 +134,6 @@ public class SessionMenuController implements Initializable {
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
         tableSession.setItems(listData);
     }
+    
 
 }
