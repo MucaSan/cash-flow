@@ -27,7 +27,6 @@
          </font>
       </Label>
       <Button fx:id="buttonCreate" layoutX="142.0" layoutY="497.0" mnemonicParsing="false" onMouseClicked="#createButtonClick" prefHeight="46.0" prefWidth="127.0" text="Create" />
-      <Button fx:id="buttonGoBack" layoutX="299.0" layoutY="497.0" mnemonicParsing="false" onMouseClicked="#buttonGoBackClick" prefHeight="46.0" prefWidth="127.0" text="Go Back" />
       <Button fx:id="buttonSave" disable="true" layoutX="142.0" layoutY="497.0" mnemonicParsing="false" onMouseClicked="#saveButtonClick" prefHeight="46.0" prefWidth="127.0" text="Save" visible="false" />
    </children>
 </AnchorPane>

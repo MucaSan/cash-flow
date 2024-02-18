@@ -7,6 +7,7 @@ import generalPurposesClasses.cashflowcontrol.Session;
 import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -115,7 +116,6 @@ public class SessionMenuController extends AlertSession implements Initializable
                                 e.printStackTrace();
                                 e.getCause();
                             }
-
                         });
 
                     }
@@ -134,6 +134,24 @@ public class SessionMenuController extends AlertSession implements Initializable
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
         tableSession.setItems(listData);
     }
-    
+    public void buttonCreateClick(MouseEvent event){
+        FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/fxml.controllers.session/session.fxml"));
+        try{
+            Parent root1 = (Parent) fxmlLoader1.load();
+            Stage stage = new Stage();
+            stage.setTitle("CREATE SESSION");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
+
+    }
+    public void buttonGoBackClick(MouseEvent event) throws IOException{
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
+    }
 }

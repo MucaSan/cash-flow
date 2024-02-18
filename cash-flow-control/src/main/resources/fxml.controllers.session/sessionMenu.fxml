@@ -32,7 +32,7 @@
             <Image url="@../images/outline_delete_black_24dp.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonCreate" layoutX="424.0" layoutY="699.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="124.0" text="Create" />
+      <Button fx:id="buttonCreate" layoutX="313.0" layoutY="699.0" mnemonicParsing="false" onMouseClicked="#buttonCreateClick" prefHeight="36.0" prefWidth="124.0" text="Create" />
       <ImageView fx:id="imgEdit" fitHeight="36.0" fitWidth="49.0" layoutX="768.0" layoutY="67.0" preserveRatio="true" smooth="false">
          <image>
             <Image url="@../images/outline_edit_black_24dp.png" />
@@ -49,10 +49,11 @@
             <Image url="@../images/outline_clear_black_24dp.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgClear1" fitHeight="36.0" fitWidth="36.0" layoutX="173.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgClear1" fitHeight="36.0" fitWidth="36.0" layoutX="137.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/outline_search_black_24dp.png" />
          </image>
       </ImageView>
+      <Button fx:id="buttonGoBack" layoutX="464.0" layoutY="699.0" mnemonicParsing="false" onMouseClicked="#buttonGoBackClick" prefHeight="36.0" prefWidth="124.0" text="Go Back" />
    </children>
 </AnchorPane>

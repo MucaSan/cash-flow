@@ -1,5 +1,6 @@
 package controllers.cashflowcontrol;
 import generalPurposesClasses.cashflowcontrol.ChangeWindow;
+import generalPurposesClasses.cashflowcontrol.VerifyExistanceValue;
 import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.scene.control.Button;
 import connection.cashflowcontrol.DatabaseConnection;
@@ -20,8 +21,6 @@ public class SessionController extends AlertSession implements CleanTextFields{
         Button buttonCreate;
         @FXML
         Button buttonSave;
-        @FXML
-        Button buttonGoBack;
         @FXML
         TextField textName;
         @FXML
@@ -45,12 +44,16 @@ public class SessionController extends AlertSession implements CleanTextFields{
                         }
                         else{
                                 GlobalVariables.SQL = "SELECT * from SessionDB;";
-                                int temp = 1;
+                                int temp = 0;
                                 try{
+                                        VerifyExistanceValue<Integer> verifyVariable = new VerifyExistanceValue<>();
                                         GlobalVariables.resultSet = GlobalVariables.statement.
                                                 executeQuery(GlobalVariables.SQL);
                                         while(GlobalVariables.resultSet.next()){
-                                                temp+=1;
+                                                if (!(verifyVariable.hasRepeatedVariable("SessionDB","id",
+                                                        GlobalVariables.resultSet.getInt(1)))){
+                                                        temp+=1;
+                                                }
                                         }
                                         GlobalVariables.SQL = "INSERT INTO SessionDB values ('"  + temp  + "', " +
                                                 "'" + textName.getText() +  "', '" + GlobalVariables.userLogged +  "'"
@@ -73,16 +76,6 @@ public class SessionController extends AlertSession implements CleanTextFields{
         public void cleanTextFields() {
                 textName.setText("");
                 textDescription.setText("");
-        }
-
-        public void buttonGoBackClick(MouseEvent event) throws IOException {
-                GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
-                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
-                        GlobalVariables.window.getPathToFXMLFile());
-                buttonSave.setVisible(false);
-                buttonCreate.setVisible(true);
-                buttonSave.setDisable(true);
-                buttonCreate.setDisable(false);
         }
 
         public void displayName (String name){
