@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -39,6 +40,8 @@ public class SessionMenuController extends AlertSession implements Initializable
     private AnchorPane root;
     @FXML
     private ImageView imgEdit;
+    @FXML
+    private ImageView imgFilter;
     @FXML
     private ImageView imgDelete;
     @FXML
@@ -153,5 +156,11 @@ public class SessionMenuController extends AlertSession implements Initializable
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
+    }
+    public void textFilterChange(InputMethodEvent event){
+        System.out.println("Text has changed");
+    }
+    public void clearFilterClick(MouseEvent event){
+        textFilter.setText("");
     }
 }
