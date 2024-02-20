@@ -159,6 +159,7 @@ public class SessionMenuController extends AlertSession implements Initializable
     }
     public void textFilterChange(InputMethodEvent event){
         System.out.println("Text has changed");
+        System.out.println("We'll try to change the event, for now, we just need to debug this code and see where's the error");
     }
     public void clearFilterClick(MouseEvent event){
         textFilter.setText("");
