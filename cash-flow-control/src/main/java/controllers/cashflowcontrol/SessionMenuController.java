@@ -162,6 +162,8 @@ public class SessionMenuController extends AlertSession implements Initializable
         System.out.println("We'll try to change the event, for now, we just need to debug this code and see where's the error");
     }
     public void clearFilterClick(MouseEvent event){
+        // set an action that happens after the event filter element is clicked! in another words, adds only the
+        // elements.
         textFilter.setText("");
     }
 }

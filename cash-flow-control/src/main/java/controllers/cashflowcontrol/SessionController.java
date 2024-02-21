@@ -77,7 +77,6 @@ public class SessionController extends AlertSession implements CleanTextFields{
                 textName.setText("");
                 textDescription.setText("");
         }
-
         public void displayName (String name){
                 textName.setText(name);
         }
