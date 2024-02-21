@@ -49,7 +49,7 @@
             <Image url="@../images/outline_clear_black_24dp.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgFilter" fitHeight="36.0" fitWidth="36.0" layoutX="137.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgFilter" fitHeight="36.0" fitWidth="36.0" layoutX="137.0" layoutY="67.0" onMouseClicked="#clearImageClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/outline_search_black_24dp.png" />
          </image>

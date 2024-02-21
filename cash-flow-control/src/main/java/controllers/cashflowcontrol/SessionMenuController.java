@@ -69,58 +69,58 @@ public class SessionMenuController extends AlertSession implements Initializable
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
             GlobalVariables.nIterations = 0;
             while (GlobalVariables.resultSet.next()) {
-                String name = GlobalVariables.resultSet.getNString(2);
-                String description = GlobalVariables.resultSet.getNString(4);
-                ImageView tempEdit = new ImageView() {
-                    {
-                        setId(String.format("edit%d", GlobalVariables.nIterations));
-                        setImage(imgEdit.getImage());
-                        setFitWidth(25);
-                        setFitHeight(25);
-                        final int j = GlobalVariables.nIterations;
-                        setOnMouseClicked(mouseEvent -> {
-                            try{
-                                FXMLLoader loader = new FXMLLoader(getClass()
-                                        .getResource("/fxml.controllers.session/session.fxml"));
-                                root = loader.load();
-                                SessionController sessionController = loader.getController();
-                                sessionController.displayName(name);
-                                sessionController.displayDescription(description);
-                                Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-                               Scene scene = new Scene(root);
-                               stage.setScene(scene);
-                                sessionController.buttonSave.setVisible(true);
-                                sessionController.buttonCreate.setVisible(false);
-                                sessionController.buttonSave.setDisable(false);
-                                sessionController.buttonCreate.setDisable(true);
-                                sessionController.nameAssociated = name;
-                            } catch (IOException e){
-                                e.getCause();
-                                e.printStackTrace();
-                            }
-                        });
-                    }
 
-                };
-                ImageView tempDelete = new ImageView() {
-                    {
-                        setId(String.format("delete%d", GlobalVariables.nIterations));
-                        setImage(imgDelete.getImage());
-                        setFitWidth(25);
-                        setFitHeight(25);
-                        final int j = GlobalVariables.nIterations;
-                        setOnMouseClicked(mouseEvent ->{
-                            try{
-                                alertMessage(name);
-                                GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.session/sessionMenu.fxml");
-                                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
-                                        GlobalVariables.window.getPathToFXMLFile());
-                            } catch(IOException e){
-                                e.printStackTrace();
-                                e.getCause();
+                        String name = GlobalVariables.resultSet.getNString(2);
+                        String description = GlobalVariables.resultSet.getNString(4);
+                        ImageView tempEdit = new ImageView() {
+                            {
+                                setId(String.format("edit%d", GlobalVariables.nIterations));
+                                setImage(imgEdit.getImage());
+                                setFitWidth(25);
+                                setFitHeight(25);
+                                final int j = GlobalVariables.nIterations;
+                                setOnMouseClicked(mouseEvent -> {
+                                    try{
+                                        FXMLLoader loader = new FXMLLoader(getClass()
+                                                .getResource("/fxml.controllers.session/session.fxml"));
+                                        root = loader.load();
+                                        SessionController sessionController = loader.getController();
+                                        sessionController.displayName(name);
+                                        sessionController.displayDescription(description);
+                                        Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                                        Scene scene = new Scene(root);
+                                        stage.setScene(scene);
+                                        sessionController.buttonSave.setVisible(true);
+                                        sessionController.buttonCreate.setVisible(false);
+                                        sessionController.buttonSave.setDisable(false);
+                                        sessionController.buttonCreate.setDisable(true);
+                                        sessionController.nameAssociated = name;
+                                    } catch (IOException e){
+                                        e.getCause();
+                                        e.printStackTrace();
+                                    }
+                                });
                             }
-                        });
 
+                        };
+                        ImageView tempDelete = new ImageView() {
+                            {
+                                setId(String.format("delete%d", GlobalVariables.nIterations));
+                                setImage(imgDelete.getImage());
+                                setFitWidth(25);
+                                setFitHeight(25);
+                                final int j = GlobalVariables.nIterations;
+                                setOnMouseClicked(mouseEvent ->{
+                                    try{
+                                        alertMessage(name);
+                                        GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.session/sessionMenu.fxml");
+                                        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                                GlobalVariables.window.getPathToFXMLFile());
+                                    } catch(IOException e){
+                                        e.printStackTrace();
+                                        e.getCause();
+                                    }
+                                });
                     }
                 };
                 GlobalVariables.nIterations+=1;
@@ -149,8 +149,6 @@ public class SessionMenuController extends AlertSession implements Initializable
             e.printStackTrace();
             e.getCause();
         }
-
-
     }
     public void buttonGoBackClick(MouseEvent event) throws IOException{
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
@@ -166,4 +164,78 @@ public class SessionMenuController extends AlertSession implements Initializable
         // elements.
         textFilter.setText("");
     }
-}
+    public void clearImageClick (MouseEvent event) throws SQLException{
+        GlobalVariables.SQL ="SELECT * FROM SessionDB WHERE name LIKE '%"+ textFilter.getText() + "%' AND " +
+                "userAssociated= '" + GlobalVariables.userLogged + "';";
+        System.out.println(GlobalVariables.SQL);
+        GlobalVariables.connection = GlobalVariables.database.getConnection();
+        GlobalVariables.statement = GlobalVariables.connection.createStatement();
+        GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+        ObservableList<Session> listData = FXCollections.observableArrayList();
+        tableSession.setItems(listData);
+        GlobalVariables.nIterations = 0;
+        while (GlobalVariables.resultSet.next()){
+            String name = GlobalVariables.resultSet.getNString(2);
+            String description = GlobalVariables.resultSet.getNString(4);
+            ImageView tempEdit = new ImageView() {
+                {
+                    setId(String.format("edit%d", GlobalVariables.nIterations));
+                    setImage(imgEdit.getImage());
+                    setFitWidth(25);
+                    setFitHeight(25);
+                    final int j = GlobalVariables.nIterations;
+                    setOnMouseClicked(mouseEvent -> {
+                        try{
+                            FXMLLoader loader = new FXMLLoader(getClass()
+                                    .getResource("/fxml.controllers.session/session.fxml"));
+                            root = loader.load();
+                            SessionController sessionController = loader.getController();
+                            sessionController.displayName(name);
+                            sessionController.displayDescription(description);
+                            Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            sessionController.buttonSave.setVisible(true);
+                            sessionController.buttonCreate.setVisible(false);
+                            sessionController.buttonSave.setDisable(false);
+                            sessionController.buttonCreate.setDisable(true);
+                            sessionController.nameAssociated = name;
+                        } catch (IOException e){
+                            e.getCause();
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
+            };
+            ImageView tempDelete = new ImageView() {
+                {
+                    setId(String.format("delete%d", GlobalVariables.nIterations));
+                    setImage(imgDelete.getImage());
+                    setFitWidth(25);
+                    setFitHeight(25);
+                    final int j = GlobalVariables.nIterations;
+                    setOnMouseClicked(mouseEvent ->{
+                        try{
+                            alertMessage(name);
+                            GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.session/sessionMenu.fxml");
+                            GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                    GlobalVariables.window.getPathToFXMLFile());
+                        } catch(IOException e){
+                            e.printStackTrace();
+                            e.getCause();
+                        }
+                    });
+                }
+            };
+            GlobalVariables.nIterations+=1;
+            listData.add(new Session(GlobalVariables.nIterations, GlobalVariables.resultSet
+                    .getNString(2),
+                    new HBox(tempEdit, tempDelete)));
+        }
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
+        tableSession.setItems(listData);
+        }
+    }
