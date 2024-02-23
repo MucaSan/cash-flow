@@ -214,6 +214,7 @@ public class PaymentMenuController extends AlertPayment implements Initializable
                     final int j = GlobalVariables.nIterations;
                     setOnMouseClicked(mouseEvent ->{
                         try{
+                            alertMessage(name);
                             GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.payment/paymentMenu.fxml");
                             GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                                     GlobalVariables.window.getPathToFXMLFile());
