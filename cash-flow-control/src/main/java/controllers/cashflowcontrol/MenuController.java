@@ -36,7 +36,7 @@ public class MenuController implements Initializable {
     }
 
     public void buttonPaymentClick(MouseEvent event) throws IOException{
-        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.payment/payment.fxml");
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.payment/paymentMenu.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
     }

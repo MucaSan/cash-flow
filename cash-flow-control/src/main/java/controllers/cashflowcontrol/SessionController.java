@@ -25,7 +25,6 @@ public class SessionController extends AlertSession implements CleanTextFields{
         TextField textName;
         @FXML
         TextArea textDescription;
-
         public void createButtonClick(MouseEvent event){
                 if (textName.getText().isBlank() || textDescription.getText().isBlank()){
                         alertBlank();

@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class PaymentController extends AlertPayment {
+    private String nameAssociated = null;
     @FXML
     Button buttonCreate;
+    @FXML
+    Button buttonSave;
     @FXML
     Button buttonGoBack;
     @FXML
@@ -71,10 +74,49 @@ public class PaymentController extends AlertPayment {
         textName.setText("");
         textDescription.setText("");
     }
+    public void displayName (String name){
+        textName.setText(name);
+    }
+    public void displayDescription(String description){
+        textDescription.setText(description);
+    }
+    public void saveButtonClick(MouseEvent event) throws IOException{
+        try{
+            GlobalVariables.SQL =
+                    "SELECT * FROM SessionDB WHERE name = '" + textName.getText() +  "' AND " +
+                            "userAssociated = '" + GlobalVariables.userLogged  + "' ;";
+            GlobalVariables.connection = GlobalVariables.database.getConnection();
+            GlobalVariables.statement = GlobalVariables.connection.createStatement();
+            GlobalVariables.resultSet = GlobalVariables.statement
+                    .executeQuery(GlobalVariables.SQL);
+            if (GlobalVariables.resultSet.next() && !(textName.getText().equals(nameAssociated))){
+                alertRecordAssociated();
+            } else{
+                GlobalVariables.SQL =
+                        "UPDATE SessionDB SET name = '" + textName.getText() +  "'" +
+                                ", description = '" + textDescription.getText() +  "'" +
+                                " WHERE name = '" + nameAssociated + "' AND userAssociated = '"
+                                + GlobalVariables.userLogged + "';";
+                GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
+                alertSuccess();
+                GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.session/sessionMenu.fxml");
+                GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                        GlobalVariables.window.getPathToFXMLFile());
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
 
     public void buttonGoBackClick(MouseEvent event) throws IOException {
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
         GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
+    }
+
+    public void setNameAssociated(String nameAssociated){
+        this.nameAssociated = nameAssociated;
     }
 }

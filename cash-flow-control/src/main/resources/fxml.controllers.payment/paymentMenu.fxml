@@ -22,12 +22,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="464.0" prefHeight="36.0" prefWidth="194.0" text="Payment">
+      <Label layoutX="454.0" layoutY="7.0" prefHeight="36.0" prefWidth="144.0" text="Payment">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="imgDelete" fitHeight="36.0" fitWidth="49.0" layoutX="719.0" layoutY="67.0" onMouseClicked="#clearFilterClick" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgDelete" fitHeight="36.0" fitWidth="49.0" layoutX="719.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/outline_delete_black_24dp.png" />
          </image>
@@ -43,13 +43,13 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="textFilter" layoutX="173.0" layoutY="70.0" onInputMethodTextChanged="#textFilterChange" onMouseClicked="#clearFilterClick" prefHeight="30.0" prefWidth="291.0" />
-      <ImageView fx:id="imgClear" fitHeight="36.0" fitWidth="36.0" layoutX="474.0" layoutY="64.0" onMouseClicked="#clearFilterClick" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="textFilter" layoutX="173.0" layoutY="70.0" prefHeight="30.0" prefWidth="291.0" />
+      <ImageView fx:id="imgClear" fitHeight="36.0" fitWidth="49.0" layoutX="474.0" layoutY="64.0" onMouseClicked="#clearFilterClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/outline_clear_black_24dp.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgClear1" fitHeight="36.0" fitWidth="36.0" layoutX="137.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgFilter" fitHeight="36.0" fitWidth="36.0" layoutX="137.0" layoutY="67.0" onMouseClicked="#clearImageClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/outline_search_black_24dp.png" />
          </image>

@@ -28,6 +28,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-public class SessionMenuController extends AlertSession implements Initializable {
+public class SessionMenuController extends AlertSession implements Initializable, Closeable {
     @FXML
     private AnchorPane root;
     @FXML
@@ -237,5 +239,12 @@ public class SessionMenuController extends AlertSession implements Initializable
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
         tableSession.setItems(listData);
+        }
+    public void close() throws IOException{
+        MouseEvent event = null;
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
+        System.out.println("Closed!");
         }
     }
