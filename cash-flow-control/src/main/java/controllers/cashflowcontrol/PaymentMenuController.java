@@ -1,4 +1,5 @@
 package controllers.cashflowcontrol;
+import alerts.classes.cashflowcontrol.AlertPayment;
 import alerts.classes.cashflowcontrol.AlertSession;
 import generalPurposesClasses.cashflowcontrol.ChangeWindow;
 import generalPurposesClasses.cashflowcontrol.Payment;
@@ -37,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PaymentMenuController implements Initializable, Closeable {
+public class PaymentMenuController extends AlertPayment implements Initializable, Closeable {
     @FXML
     private AnchorPane root;
     @FXML
@@ -114,6 +115,7 @@ public class PaymentMenuController implements Initializable, Closeable {
                         final int j = GlobalVariables.nIterations;
                         setOnMouseClicked(mouseEvent ->{
                             try{
+                                alertMessage(name);
                                 GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.payment/paymentMenu.fxml");
                                 GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                                         GlobalVariables.window.getPathToFXMLFile());
@@ -144,10 +146,93 @@ public class PaymentMenuController implements Initializable, Closeable {
 
     }
     public void buttonCreateClick(MouseEvent mouseEvent) {
+        FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/fxml.controllers.payment/payment.fxml"));
+        try{
+            Parent root1 = (Parent) fxmlLoader1.load();
+            Stage stage = new Stage();
+            stage.setTitle("CREATE SESSION");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+            e.getCause();
+        }
     }
     public void clearFilterClick(MouseEvent mouseEvent) {
+        textFilter.setText("");
     }
-    public void clearImageClick(MouseEvent mouseEvent) {
+    public void clearImageClick(MouseEvent mouseEvent) throws SQLException {
+        GlobalVariables.SQL ="SELECT * FROM PaymentDB WHERE name LIKE '%"+ textFilter.getText() + "%' AND " +
+                "userAssociated= '" + GlobalVariables.userLogged + "';";
+        System.out.println(GlobalVariables.SQL);
+        GlobalVariables.connection = GlobalVariables.database.getConnection();
+        GlobalVariables.statement = GlobalVariables.connection.createStatement();
+        GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+        ObservableList<Payment> listData = FXCollections.observableArrayList();
+        tableSession.setItems(listData);
+        GlobalVariables.nIterations = 0;
+        while (GlobalVariables.resultSet.next()){
+            String name = GlobalVariables.resultSet.getNString(2);
+            String description = GlobalVariables.resultSet.getNString(4);
+            ImageView tempEdit = new ImageView() {
+                {
+                    setId(String.format("edit%d", GlobalVariables.nIterations));
+                    setImage(imgEdit.getImage());
+                    setFitWidth(25);
+                    setFitHeight(25);
+                    final int j = GlobalVariables.nIterations;
+                    setOnMouseClicked(mouseEvent -> {
+                        try{
+                            FXMLLoader loader = new FXMLLoader(getClass()
+                                    .getResource("/fxml.controllers.payment/payment.fxml"));
+                            root = loader.load();
+                            SessionController sessionController = loader.getController();
+                            sessionController.displayName(name);
+                            sessionController.displayDescription(description);
+                            Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            sessionController.buttonSave.setVisible(true);
+                            sessionController.buttonCreate.setVisible(false);
+                            sessionController.buttonSave.setDisable(false);
+                            sessionController.buttonCreate.setDisable(true);
+                            sessionController.nameAssociated = name;
+                        } catch (IOException e){
+                            e.getCause();
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
+            };
+            ImageView tempDelete = new ImageView() {
+                {
+                    setId(String.format("delete%d", GlobalVariables.nIterations));
+                    setImage(imgDelete.getImage());
+                    setFitWidth(25);
+                    setFitHeight(25);
+                    final int j = GlobalVariables.nIterations;
+                    setOnMouseClicked(mouseEvent ->{
+                        try{
+                            GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.payment/paymentMenu.fxml");
+                            GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                                    GlobalVariables.window.getPathToFXMLFile());
+                        } catch(IOException e){
+                            e.printStackTrace();
+                            e.getCause();
+                        }
+                    });
+                }
+            };
+            GlobalVariables.nIterations+=1;
+            listData.add(new Payment(GlobalVariables.nIterations, GlobalVariables.resultSet
+                    .getNString(2),
+                    new HBox(tempEdit, tempDelete)));
+        }
+        colID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
+        tableSession.setItems(listData);
     }
 
     public void buttonGoBackClick(MouseEvent mouseEvent) {
