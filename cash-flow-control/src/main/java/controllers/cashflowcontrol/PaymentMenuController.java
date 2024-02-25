@@ -236,7 +236,10 @@ public class PaymentMenuController extends AlertPayment implements Initializable
         tableSession.setItems(listData);
     }
 
-    public void buttonGoBackClick(MouseEvent mouseEvent) {
+    public void buttonGoBackClick(MouseEvent mouseEvent) throws IOException {
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.menu/menu.fxml");
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
     }
 }
 
