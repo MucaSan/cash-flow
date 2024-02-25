@@ -7,10 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 import alerts.classes.cashflowcontrol.AlertManage;
 
 public class ManageController extends AlertManage implements Initializable, CleanTextFields {
+    @FXML
+    private DatePicker datePickerDate;
     @FXML
     private TextField   textName;
     @FXML
@@ -83,7 +83,7 @@ public class ManageController extends AlertManage implements Initializable, Clea
                 GlobalVariables.SQL = "INSERT INTO TransactionDB values('" + temp + "', " +
                         "'" + idSession  +  "', '" + idPayment +  "' , '" + textName.getText() + "'" +
                         ",'" + textSource.getText()  +  "', '" + textAmount.getText() + "', " +
-                        "'"  + GlobalVariables.userLogged + "')";
+                        "'"  + GlobalVariables.userLogged + "', '" + datePickerDate.getValue().toString() +"')";
                 GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
                 alertSuccess();
                 cleanTextFields();
@@ -129,6 +129,7 @@ public class ManageController extends AlertManage implements Initializable, Clea
         textAmount.setText("");
         comboSession.setValue("");
         comboPayment.setValue("");
+        datePickerDate.setValue(null);
     }
     public void clickButtonGoBack(MouseEvent event) throws IOException{
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
