@@ -7,9 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import org.w3c.dom.Text;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 public class ManageMenuController extends AlertManage implements Initializable{
     @FXML
@@ -35,9 +39,17 @@ public class ManageMenuController extends AlertManage implements Initializable{
     @FXML
     private TableView<Manage> tableManage;
     @FXML
-    private TableColumn<Manage, >
+    private TableColumn<Manage, Integer> colID;
     @FXML
+    private TableColumn<Manage, String > colName;
     @FXML
+    private TableColumn<Manage, String> colSession;
+    @FXML
+    private TableColumn<Manage, String> colPayment;
+    @FXML
+    private TableColumn<Manage, LocalDateTime> colDate;
+    @FXML
+    private TableColumn<Manage, List<ImageView>> colAction;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
