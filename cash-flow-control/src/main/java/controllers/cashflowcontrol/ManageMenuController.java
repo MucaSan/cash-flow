@@ -1,6 +1,8 @@
 package controllers.cashflowcontrol;
+import generalPurposesClasses.cashflowcontrol.ChangeWindow;
 import generalPurposesClasses.cashflowcontrol.Manage;
 import alerts.classes.cashflowcontrol.AlertManage;
+import generalVariables.cashflowcontrol.GlobalVariables;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,9 +10,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,5 +57,10 @@ public class ManageMenuController extends AlertManage implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+    public void buttonGoBackClick(MouseEvent event) throws IOException {
+        GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
+        GlobalVariables.window.setNewWindowFromMouse    Click(GlobalVariables.window.getActionMouse(),
+                GlobalVariables.window.getPathToFXMLFile());
     }
 }
