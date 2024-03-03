@@ -60,7 +60,15 @@ public class ManageMenuController extends AlertManage implements Initializable{
     }
     public void buttonGoBackClick(MouseEvent event) throws IOException {
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");
-        GlobalVariables.window.setNewWindowFromMouse    Click(GlobalVariables.window.getActionMouse(),
+        GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                 GlobalVariables.window.getPathToFXMLFile());
     }
+    private void buttonClearClick(MouseEvent event){
+        textEndDate.setText("");
+        textName.setText("");
+        textPayment.setText("");
+        textPrice.setText("");
+        textSession.setText("");
+        textStartDate.setText("");
+ }
 }
