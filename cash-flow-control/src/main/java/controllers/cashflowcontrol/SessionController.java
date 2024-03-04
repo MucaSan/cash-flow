@@ -43,7 +43,7 @@ public class SessionController extends AlertSession implements CleanTextFields{
                         }
                         else{
                                 GlobalVariables.SQL = "SELECT * from SessionDB;";
-                                int temp = 0;
+                                int temp = -1;
                                 try{
                                         VerifyExistanceValue<Integer> verifyVariable = new VerifyExistanceValue<>();
                                         GlobalVariables.resultSet = GlobalVariables.statement.
@@ -109,8 +109,5 @@ public class SessionController extends AlertSession implements CleanTextFields{
                         e.printStackTrace();
                         e.getCause();
                 }
-
         }
-
-
 }
