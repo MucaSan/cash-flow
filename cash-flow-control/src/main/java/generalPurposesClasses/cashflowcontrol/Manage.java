@@ -12,7 +12,6 @@ public class Manage {
     private double price;
     private LocalDateTime dateTime;
     private HBox actions;
-
     public Manage(int id, String name , String session, String payment, double price, LocalDateTime dateTime
     , HBox actions){
         this.id = id;

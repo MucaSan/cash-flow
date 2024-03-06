@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
@@ -27,9 +28,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 public class ManageMenuController extends AlertManage implements Initializable{
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private ImageView imgEdit;
+    @FXML
+    private ImageView imgDelete;
     @FXML
     private TextField textName;
     @FXML
@@ -53,6 +61,8 @@ public class ManageMenuController extends AlertManage implements Initializable{
     @FXML
     private TableView<Manage> tableManage;
     @FXML
+    private TableColumn<Manage, Double> colPrice;
+    @FXML
     private TableColumn<Manage, Integer> colID;
     @FXML
     private TableColumn<Manage, String > colName;
@@ -66,17 +76,21 @@ public class ManageMenuController extends AlertManage implements Initializable{
     private TableColumn<Manage, List<ImageView>> colAction;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Session> listData = FXCollections.observableArrayList();
+        ObservableList<Manage> listData = FXCollections.observableArrayList();
         try {
-            GlobalVariables.SQL = "SELECT * FROM SessionDB where userAssociated= '" + GlobalVariables.userLogged + "';";
+            GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
+            "on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated = '"+ GlobalVariables.userLogged +  "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
             GlobalVariables.nIterations = 0;
             while (GlobalVariables.resultSet.next()) {
 
-                String name = GlobalVariables.resultSet.getNString(2);
-                String description = GlobalVariables.resultSet.getNString(4);
+                String name = GlobalVariables.resultSet.getNString(1);
+                String nameSession = GlobalVariables.resultSet.getNString(2);
+                String namePayment = GlobalVariables.resultSet.getNString(3);
+                String date = GlobalVariables.resultSet.getString(4);
+                double price = GlobalVariables.resultSet.getDouble(5);
                 ImageView tempEdit = new ImageView() {
                     {
                         setId(String.format("edit%d", GlobalVariables.nIterations));
@@ -91,7 +105,6 @@ public class ManageMenuController extends AlertManage implements Initializable{
                                 root = loader.load();
                                 SessionController sessionController = loader.getController();
                                 sessionController.displayName(name);
-                                sessionController.displayDescription(description);
                                 Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
                                 Scene scene = new Scene(root);
                                 stage.setScene(scene);
@@ -129,8 +142,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
                     }
                 };
                 GlobalVariables.nIterations+=1;
-                listData.add(new Session(GlobalVariables.nIterations, GlobalVariables.resultSet
-                        .getNString(2),
+                listData.add(new Manage(GlobalVariables.nIterations, name,nameSession, namePayment,date, price
                         new HBox(tempEdit, tempDelete)));
             }
         } catch (SQLException e) {
@@ -140,7 +152,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
-        tableSession.setItems(listData);
+        tableManage.setItems(listData);
     }
     public void buttonGoBackClick(MouseEvent event) throws IOException {
         GlobalVariables.window = new ChangeWindow<MouseEvent>(event,"/fxml.controllers.menu/menu.fxml");

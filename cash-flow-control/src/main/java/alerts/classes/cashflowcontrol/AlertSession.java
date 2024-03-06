@@ -48,6 +48,7 @@ public class AlertSession implements AlertActionSucessful, AlertToBlank, AlertTo
                 GlobalVariables.SQL = "DELETE TransactionDB from TransactionDB INNER JOIN SessionDB " +
                         "on TransactionDB.idSession = SessionDB.id where SessionDB.name = '" + name +  "' AND " +
                         "TransactionDB.userAssociated = '"  +  GlobalVariables.userLogged +"';";
+
                GlobalVariables.connection = GlobalVariables.database.getConnection();
                GlobalVariables.statement = GlobalVariables.connection.createStatement();
                GlobalVariables.statement.executeUpdate(GlobalVariables.SQL);
