@@ -50,7 +50,7 @@ public class AlertPayment implements AlertActionSucessful, AlertToBlank, AlertTo
         try{
             if(buttonClicked.get() == ButtonType.YES){
                 GlobalVariables.SQL = "DELETE TransactionDB from TransactionDB INNER JOIN PaymentDB " +
-                        "on TransactionDB.idPayment = PaymentDB.id where Payment.name = '" + name +  "' AND " +
+                        "on TransactionDB.idPayment = PaymentDB.id where PaymentDB.name = '" + name +  "' AND " +
                         "TransactionDB.userAssociated = '"  +  GlobalVariables.userLogged +"';";
                 GlobalVariables.connection = GlobalVariables.database.getConnection();
                 GlobalVariables.statement = GlobalVariables.connection.createStatement();

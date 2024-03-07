@@ -71,7 +71,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
     @FXML
     private TableColumn<Manage, String> colPayment;
     @FXML
-    private TableColumn<Manage, LocalDateTime> colDate;
+    private TableColumn<Manage, Date> colDate;
     @FXML
     private TableColumn<Manage, List<ImageView>> colAction;
     @Override
@@ -79,17 +79,16 @@ public class ManageMenuController extends AlertManage implements Initializable{
         ObservableList<Manage> listData = FXCollections.observableArrayList();
         try {
             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
-            "on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated = '"+ GlobalVariables.userLogged +  "';";
+            "on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
             GlobalVariables.nIterations = 0;
             while (GlobalVariables.resultSet.next()) {
-
                 String name = GlobalVariables.resultSet.getNString(1);
                 String nameSession = GlobalVariables.resultSet.getNString(2);
                 String namePayment = GlobalVariables.resultSet.getNString(3);
-                String date = GlobalVariables.resultSet.getString(4);
+                Date date = GlobalVariables.resultSet.getDate(4);
                 double price = GlobalVariables.resultSet.getDouble(5);
                 ImageView tempEdit = new ImageView() {
                     {
@@ -142,7 +141,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
                     }
                 };
                 GlobalVariables.nIterations+=1;
-                listData.add(new Manage(GlobalVariables.nIterations, name,nameSession, namePayment,date, price
+                listData.add(new Manage(GlobalVariables.nIterations, name,nameSession, namePayment, price,date,
                         new HBox(tempEdit, tempDelete)));
             }
         } catch (SQLException e) {
@@ -151,6 +150,10 @@ public class ManageMenuController extends AlertManage implements Initializable{
         }
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        colPayment.setCellValueFactory(new PropertyValueFactory<>("payment"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colSession.setCellValueFactory(new PropertyValueFactory<>("session"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("actions"));
         tableManage.setItems(listData);
     }
