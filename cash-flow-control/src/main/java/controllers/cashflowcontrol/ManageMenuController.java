@@ -79,11 +79,13 @@ public class ManageMenuController extends AlertManage implements Initializable{
         ObservableList<Manage> listData = FXCollections.observableArrayList();
         try {
             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
-            "on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "';";
+            " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
+            System.out.println(GlobalVariables.SQL);
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
-            GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL);
+            GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL); // error is here because of the SQL string
             GlobalVariables.nIterations = 0;
+            System.out.println("failed here17");
             while (GlobalVariables.resultSet.next()) {
                 String name = GlobalVariables.resultSet.getNString(1);
                 String nameSession = GlobalVariables.resultSet.getNString(2);
@@ -100,7 +102,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
                         setOnMouseClicked(mouseEvent -> {
                             try{
                                 FXMLLoader loader = new FXMLLoader(getClass()
-                                        .getResource("/fxml.controllers.session/manage.fxml"));
+                                        .getResource("/fxml.controllers.manage/manage.fxml"));
                                 root = loader.load();
                                 SessionController sessionController = loader.getController();
                                 sessionController.displayName(name);
@@ -130,7 +132,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
                         setOnMouseClicked(mouseEvent ->{
                             try{
                                 alertMessage(name);
-                                GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.session/manageMenu.fxml");
+                                GlobalVariables.window = new ChangeWindow<MouseEvent>(mouseEvent,"/fxml.controllers.manage/manageMenu.fxml");
                                 GlobalVariables.window.setNewWindowFromMouseClick(GlobalVariables.window.getActionMouse(),
                                         GlobalVariables.window.getPathToFXMLFile());
                             } catch(IOException e){
