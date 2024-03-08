@@ -81,11 +81,9 @@ public class ManageMenuController extends AlertManage implements Initializable{
             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
             " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
-            System.out.println(GlobalVariables.SQL);
             GlobalVariables.statement = GlobalVariables.connection.createStatement();
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL); // error is here because of the SQL string
             GlobalVariables.nIterations = 0;
-            System.out.println("failed here17");
             while (GlobalVariables.resultSet.next()) {
                 String name = GlobalVariables.resultSet.getNString(1);
                 String nameSession = GlobalVariables.resultSet.getNString(2);
@@ -186,5 +184,26 @@ public class ManageMenuController extends AlertManage implements Initializable{
          e.printStackTrace();
          e.getCause();
      }
+ }
+ public void buttonFilterClick(MouseEvent event){
+
+
+     }
+
+ public boolean compareIfFollowsDateFormat(String firstDate, String secondDate){
+        String[] firstDateElements = firstDate.split("-");
+        String[] secondDateElements = secondDate.split("-");
+        boolean[] vericationsByElements = new boolean[3];
+        for (int i = 0; i < 3; i++){
+            vericationsByElements[i] = Integer.parseInt(firstDateElements[i]) < Integer.parseInt(secondDateElements[i]);
+        }
+        if (vericationsByElements[0] || vericationsByElements[1]){
+            return true;
+        }else{
+           if(vericationsByElements[2]){
+               return true;
+           }
+           return false;
+        }
  }
 }
