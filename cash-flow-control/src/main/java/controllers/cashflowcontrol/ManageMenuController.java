@@ -145,6 +145,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
                 GlobalVariables.nIterations+=1;
                 listData.add(new Manage(GlobalVariables.nIterations, name,nameSession, namePayment, price,date,
                         new HBox(tempEdit, tempDelete)));
+
             }
         } catch (SQLException e) {
             e.getCause();
@@ -174,7 +175,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
         textStartDate.setText("");
  }
  public void buttonCreateClick(MouseEvent event){
-     FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/fxml.controllers.payment/manage.fxml"));
+     FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/fxml.controllers.manage/manage.fxml"));
      try{
          Parent root1 =  fxmlLoader1.load();
          Stage stage = new Stage();

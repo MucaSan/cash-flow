@@ -12,7 +12,7 @@ public class Manage {
     private String payment;
     private double price;
     private Date dateTime;
-    private HBox actions;
+     HBox actions;
     public Manage(int id, String name , String session, String payment, double price, Date dateTime
     , HBox actions){
         this.id = id;
@@ -23,44 +23,46 @@ public class Manage {
         this.dateTime = dateTime;
         this.actions = actions;
     }
-    private int getId(){
+    public int getId(){
         return this.id;
     }
-    private String getName(){
+    public String getName(){
         return this.name;
     }
-    private String getSession(){
+    public String getSession(){
         return session;
     }
-    private String getPayment(){
+
+
+    public String getPayment(){
         return this.payment;
-    } private double getPrice(){
+    } public double getPrice(){
         return this.price;
-    } private Date getDateTime(){
+    } public Date getDateTime(){
         return this.dateTime;
-    } private HBox getActions(){
+    } public HBox getActions(){
         return this.actions;
     }
 
-    private void setId(int id){
+    public void setId(int id){
         this.id = id;
     }
-    private void setName(String name){
+    public void setName(String name){
         this.name = name;
     }
-    private void setSession(String session){
+    public void setSession(String session){
         this.session = session;
     }
-    private void setPayment(String payment){
+    public void setPayment(String payment){
         this.payment = payment;
     }
-    private void setPrice(double price){
+    public void setPrice(double price){
         this.price = price;
     }
-    private void setDateTime(Date dateTime){
+    public void setDateTime(Date dateTime){
         this.dateTime = dateTime;
     }
-    private void setActions(HBox actions){
+    public void setActions(HBox actions){
         this.actions = actions;
     }
 
