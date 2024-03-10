@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import connection.cashflowcontrol.DatabaseConnection;
@@ -38,6 +40,24 @@ public class ManageController extends AlertManage implements Initializable, Clea
     private Button  buttonCreate;
     @FXML
     private Button buttonGoBack;
+    public void displayDate(String value){
+        datePickerDate.setPromptText(value);
+    }
+    public void displayName(String name){
+        textName.setText(name);
+    }
+    public void displaySource(String source){
+        textSource.setText(source);
+    }
+    public void displayAmount(String amount){
+        textAmount.setText(amount);
+    }
+    public void displaySession(String session){
+        comboSession.setValue(session);
+    }
+    public void displayPayment(String payment){
+        comboSession.setValue(payment);
+    }
     public void buttonCreateClick(MouseEvent event){
         boolean expressionToEvaluate = (textName.getText().isBlank() || textSource.getText().isBlank()
         || textAmount.getText().isBlank() || comboSession.getValue().isBlank() ||
