@@ -2,6 +2,7 @@ package generalPurposesClasses.cashflowcontrol;
 
 import javafx.scene.layout.HBox;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -11,9 +12,9 @@ public class Manage {
     private String session;
     private String payment;
     private double price;
-    private Date dateTime;
+    private LocalDate dateTime;
      HBox actions;
-    public Manage(int id, String name , String session, String payment, double price, Date dateTime
+    public Manage(int id, String name , String session, String payment, double price, LocalDate dateTime
     , HBox actions){
         this.id = id;
         this.name = name;
@@ -38,7 +39,7 @@ public class Manage {
         return this.payment;
     } public double getPrice(){
         return this.price;
-    } public Date getDateTime(){
+    } public LocalDate getDateTime(){
         return this.dateTime;
     } public HBox getActions(){
         return this.actions;
@@ -59,7 +60,7 @@ public class Manage {
     public void setPrice(double price){
         this.price = price;
     }
-    public void setDateTime(Date dateTime){
+    public void setDateTime(LocalDate dateTime){
         this.dateTime = dateTime;
     }
     public void setActions(HBox actions){

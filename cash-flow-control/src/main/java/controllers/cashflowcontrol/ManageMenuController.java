@@ -27,6 +27,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,7 @@ public class ManageMenuController extends AlertManage implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Manage> listData = FXCollections.observableArrayList();
         try {
+
             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount, TransactionDB.source from TransactionDB INNER JOIN SessionDB" +
             " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "';";
             GlobalVariables.connection = GlobalVariables.database.getConnection();
@@ -85,14 +87,18 @@ public class ManageMenuController extends AlertManage implements Initializable{
             GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL); // error is here because of the SQL string
             GlobalVariables.nIterations = 0;
             while (GlobalVariables.resultSet.next()) {
+
                 String name = GlobalVariables.resultSet.getNString(1);
                 String nameSession = GlobalVariables.resultSet.getNString(2);
                 String namePayment = GlobalVariables.resultSet.getNString(3);
-                Date date = GlobalVariables.resultSet.getDate(4);
+                LocalDate date = GlobalVariables.resultSet.getDate(4).toLocalDate();
+                String Date = GlobalVariables.resultSet.getString(4);
                 double price = GlobalVariables.resultSet.getDouble(5);
+                String Amount = GlobalVariables.resultSet.getString(5);
                 String source = GlobalVariables.resultSet.getString(6);
                 ImageView tempEdit = new ImageView() {
                     {
+
                         setId(String.format("edit%d", GlobalVariables.nIterations));
                         setImage(imgEdit.getImage());
                         setFitWidth(25);
@@ -105,23 +111,18 @@ public class ManageMenuController extends AlertManage implements Initializable{
                                 root = loader.load();
                                 ManageController manageController = loader.getController();
                                 manageController.displayName(name);
-                                manageController.displayAmount(GlobalVariables.resultSet.getString(5));
-                                manageController.displayDate(GlobalVariables.resultSet.getString(4));
                                 manageController.displayPayment(namePayment);
                                 manageController.displaySession(nameSession);
                                 manageController.displaySource(source);
+                                manageController.textAmount.setText(Amount);
+                                manageController.datePickerDate.setPromptText(Date);
                                 Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
                                 Scene scene = new Scene(root);
                                 stage.setScene(scene);
-                                manageController.buttonSave.setVisible(true);
                                 manageController.buttonCreate.setVisible(false);
                                 manageController.buttonSave.setDisable(false);
                                 manageController.buttonCreate.setDisable(true);
-                                manageController.nameAssociated = name;
                             } catch (IOException e){
-                                e.getCause();
-                                e.printStackTrace();
-                            }catch (SQLException e){
                                 e.getCause();
                                 e.printStackTrace();
                             }
@@ -208,8 +209,11 @@ public class ManageMenuController extends AlertManage implements Initializable{
              String name = GlobalVariables.resultSet.getNString(1);
              String nameSession = GlobalVariables.resultSet.getNString(2);
              String namePayment = GlobalVariables.resultSet.getNString(3);
-             Date date = GlobalVariables.resultSet.getDate(4);
+             LocalDate date = GlobalVariables.resultSet.getDate(4).toLocalDate();
+             String Date = GlobalVariables.resultSet.getString(4);
              double price = GlobalVariables.resultSet.getDouble(5);
+             String Amount = GlobalVariables.resultSet.getString(5);
+             String source = GlobalVariables.resultSet.getString(6);
              ImageView tempEdit = new ImageView() {
                  {
                      setId(String.format("edit%d", GlobalVariables.nIterations));
@@ -222,16 +226,20 @@ public class ManageMenuController extends AlertManage implements Initializable{
                              FXMLLoader loader = new FXMLLoader(getClass()
                                      .getResource("/fxml.controllers.manage/manage.fxml"));
                              root = loader.load();
-                             SessionController sessionController = loader.getController();
-                             sessionController.displayName(name);
+                             ManageController manageController = loader.getController();
+                             manageController.displayName(name);
+                             manageController.displayPayment(namePayment);
+                             manageController.displaySession(nameSession);
+                             manageController.displaySource(source);
+                             manageController.textAmount.setText(Amount);
+                             manageController.datePickerDate.setValue(date);
                              Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
                              Scene scene = new Scene(root);
                              stage.setScene(scene);
-                             sessionController.buttonSave.setVisible(true);
-                             sessionController.buttonCreate.setVisible(false);
-                             sessionController.buttonSave.setDisable(false);
-                             sessionController.buttonCreate.setDisable(true);
-                             sessionController.nameAssociated = name;
+                             manageController.buttonCreate.setVisible(false);
+                             manageController.buttonSave.setDisable(false);
+                             manageController.buttonSave.setVisible(true);
+                             manageController.buttonCreate.setDisable(true);
                          } catch (IOException e){
                              e.getCause();
                              e.printStackTrace();

@@ -23,21 +23,23 @@ import alerts.classes.cashflowcontrol.AlertManage;
 
 public class ManageController extends AlertManage implements Initializable, CleanTextFields {
     @FXML
-    private DatePicker datePickerDate;
+    public DatePicker datePickerDate;
     @FXML
     private TextField   textName;
     @FXML
     private TextField   textSource;
     @FXML
-    private TextField   textAmount;
+    public  TextField   textAmount;
     @FXML
     private ComboBox<String> comboSession;
     @FXML
     private List<String> listString;
     @FXML
-    private ComboBox<String> comboPayment;
+    private  ComboBox<String> comboPayment;
     @FXML
-    private Button  buttonCreate;
+    protected Button  buttonCreate;
+    @FXML
+    protected Button buttonSave;
     @FXML
     private Button buttonGoBack;
     public void displayDate(String value){
