@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -44,7 +41,9 @@ public class ManageMenuController extends AlertManage implements Initializable{
     @FXML
     private TextField textPrice;
     @FXML
-    private TextField textStartDate;
+    private DatePicker datePickerStart;
+    @FXML
+    private DatePicker datePickerEnd;
     @FXML
     private TextField textEndDate;
     @FXML
@@ -180,7 +179,8 @@ public class ManageMenuController extends AlertManage implements Initializable{
         textPayment.setText("");
         textPrice.setText("");
         textSession.setText("");
-        textStartDate.setText("");
+        datePickerEnd.setValue(null);
+        datePickerStart.setValue(null);
  }
  public void buttonCreateClick(MouseEvent event){
      FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/fxml.controllers.manage/manage.fxml"));
@@ -200,7 +200,9 @@ public class ManageMenuController extends AlertManage implements Initializable{
      try{
          GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
                  " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
-                 "TransactionDB.date BETWEEN '" +  textStartDate.getText()  +  "' and '"  + textEndDate.getText() +"';";
+                 "TransactionDB.date BETWEEN '" +  datePickerStart.getValue().toString()  +  "' and '"  + datePickerEnd.getValue().toString() +"'" +
+                 "AND TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
+                 "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
          GlobalVariables.connection = GlobalVariables.database.getConnection();
          GlobalVariables.statement = GlobalVariables.connection.createStatement();
          GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL); // error is here because of the SQL string
