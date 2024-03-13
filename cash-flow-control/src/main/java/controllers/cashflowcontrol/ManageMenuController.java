@@ -197,12 +197,28 @@ public class ManageMenuController extends AlertManage implements Initializable{
  }
  public void buttonFilterClick(MouseEvent event){
      ObservableList<Manage> listData = FXCollections.observableArrayList();
+     tableManage.setItems(listData);
      try{
-         GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
-                 " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
-                 "TransactionDB.date BETWEEN '" +  datePickerStart.getValue().toString()  +  "' and '"  + datePickerEnd.getValue().toString() +"'" +
-                 "AND TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
-                 "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
+         if (datePickerStart.getValue() == null || datePickerEnd.getValue() == null){
+             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
+                     " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
+                     "TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
+                     "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
+         }else if(compareIfFollowsDateFormat(datePickerStart.getValue().toString(), datePickerEnd.getAccessibleHelp().toString())){
+             GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
+                     " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
+                     "TransactionDB.date BETWEEN '" +  datePickerStart.getValue().toString()  +  "' and '"  + datePickerEnd.getValue().toString() +"'" +
+                     "AND TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
+                     "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
+         }else{
+                while(true){
+                    AlertBadDateFormat();
+                    buttonFilterClick(event);
+                    return;
+                }
+         }
+
+
          GlobalVariables.connection = GlobalVariables.database.getConnection();
          GlobalVariables.statement = GlobalVariables.connection.createStatement();
          GlobalVariables.resultSet = GlobalVariables.statement.executeQuery(GlobalVariables.SQL); // error is here because of the SQL string

@@ -1,6 +1,7 @@
 package alerts.classes.cashflowcontrol;
 import generalVariables.cashflowcontrol.GlobalVariables;
 import interfaces.cashflowcontrol.AlertActionSucessful;
+import interfaces.cashflowcontrol.AlertBadFormat;
 import interfaces.cashflowcontrol.AlertToBlank;
 import interfaces.cashflowcontrol.AlertToDatabase;
 import javafx.scene.control.Alert;
@@ -9,8 +10,7 @@ import javafx.scene.control.ButtonType;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class AlertManage implements AlertActionSucessful, AlertToBlank, AlertToDatabase {
-
+public class AlertManage implements AlertActionSucessful, AlertToBlank, AlertToDatabase, AlertBadFormat {
     @Override
     public void alertSuccess() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -58,6 +58,15 @@ public class AlertManage implements AlertActionSucessful, AlertToBlank, AlertToD
             e.getCause();
         }
 
-    }
+        }
+        @Override
+        public void AlertBadDateFormat() {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR!");
+            alert.setContentText("The start date must be smaller or equal to the final date!");
+            alert.showAndWait();
+        }
+
     }
 
