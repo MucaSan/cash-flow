@@ -76,6 +76,8 @@ public class ManageMenuController extends AlertManage implements Initializable{
     private TableColumn<Manage, List<ImageView>> colAction;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        GlobalVariables.url = url;
+        GlobalVariables.resourceBundle = resourceBundle;
         ObservableList<Manage> listData = FXCollections.observableArrayList();
         try {
 
@@ -174,7 +176,6 @@ public class ManageMenuController extends AlertManage implements Initializable{
     }
     @FXML
     private void buttonClearClick(MouseEvent event){
-        textEndDate.setText("");
         textName.setText("");
         textPayment.setText("");
         textPrice.setText("");
@@ -197,23 +198,22 @@ public class ManageMenuController extends AlertManage implements Initializable{
  }
  public void buttonFilterClick(MouseEvent event){
      ObservableList<Manage> listData = FXCollections.observableArrayList();
-     tableManage.setItems(listData);
      try{
          if (datePickerStart.getValue() == null || datePickerEnd.getValue() == null){
              GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
                      " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
-                     "TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
-                     "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
-         }else if(compareIfFollowsDateFormat(datePickerStart.getValue().toString(), datePickerEnd.getAccessibleHelp().toString())){
+                     "TransactionDB.name LIKE '%"  + textName.getText() + "%' AND SessionDB.name LIKE '%"+ textSession .getText()+ "%' " +
+                     "AND PaymentDB.name LIKE '%" +  textPayment.getText() +  "%' AND TransactionDB.amountAccount LIKE '%" + textPrice.getText() +  "%';";
+         }else if(compareIfFollowsDateFormat(datePickerStart.getValue().toString(), datePickerEnd.getValue().toString())){
              GlobalVariables.SQL = "SELECT TransactionDB.name, SessionDB.name, PaymentDB.name, TransactionDB.date, TransactionDB.amountAccount from TransactionDB INNER JOIN SessionDB" +
                      " on TransactionDB.idSession = SessionDB.id INNER JOIN PaymentDB on TransactionDB.idPayment = PaymentDB.id where TransactionDB.userAssociated= '"+ GlobalVariables.userLogged +  "' AND " +
-                     "TransactionDB.date BETWEEN '" +  datePickerStart.getValue().toString()  +  "' and '"  + datePickerEnd.getValue().toString() +"'" +
-                     "AND TransactionDB.name = '"  + textName.getText() + "' AND SessionDB.name = '"+ textSession .getText()+ "' " +
-                     "AND PaymentDB.name = '" +  textPayment.getText() +  "' AND TransactionDB.amountAccount = '" + textPrice.getText() +  "';";
+                     "TransactionDB.date BETWEEN '" +  datePickerStart.getValue().toString()  +  "' AND '"  + datePickerEnd.getValue().toString() +"'" +
+                     "AND TransactionDB.name LIKE '%"  + textName.getText() + "%' AND SessionDB.name LIKE '%"+ textSession .getText()+ "%' " +
+                     "AND PaymentDB.name LIKE '%" +  textPayment.getText() +  "%' AND TransactionDB.amountAccount LIKE '%" + textPrice.getText() +  "%';";
          }else{
                 while(true){
                     AlertBadDateFormat();
-                    buttonFilterClick(event);
+                    initialize(GlobalVariables.url, GlobalVariables.resourceBundle);
                     return;
                 }
          }
